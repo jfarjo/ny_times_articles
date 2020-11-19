@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">NY Times Articles</string>
+
+    <!--region "Common Strings"-->
+    <string name="empty" />
+    <string name="sth_wrong">Something went wrong...Please try later!</string>
+    <string name="no_internet">Please check your internet connection!</string>
+    <!--endregion-->
+
+    <string name="search_by_section">Search By Section</string>
+    <string name="source">Source</string>
+    <string name="published_date">Published Date</string>
+    <string name="section">Section</string>
+    <string name="by">By</string>
+    <string name="type">Type</string>
+    <string name="title">Title</string>
+    <string name="abstractt">Abstract</string>
+
+</resources>
