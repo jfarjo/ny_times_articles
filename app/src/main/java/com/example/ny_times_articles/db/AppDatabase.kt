@@ -1,10 +1,36 @@
 package com.example.ny_times_articles.db
 
+import android.content.Context
 import androidx.room.Database
+import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.ny_times_articles.model.Article
+import com.example.ny_times_articles.data.model.Article
 
-@Database(entities = [Article::class], version = 1)
+@Database(
+    entities = [Article::class],
+    version = 1
+)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun articleDao(): ArticleDao
+
+    abstract fun getArticleDao(): ArticleDao
+
+    companion object {
+
+        @Volatile
+        private var instance: AppDatabase? = null
+        private val LOCK = Any()
+
+        operator fun invoke(context: Context) = instance ?: synchronized(LOCK) {
+            instance ?: buildDatabase(context).also {
+                instance = it
+            }
+        }
+
+        private fun buildDatabase(context: Context) =
+            Room.databaseBuilder(
+                context.applicationContext,
+                AppDatabase::class.java,
+                "MyDatabase.db"
+            ).build()
+    }
 }

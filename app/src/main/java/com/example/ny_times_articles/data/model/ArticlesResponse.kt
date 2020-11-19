@@ -1,4 +1,4 @@
-package com.example.ny_times_articles.model
+package com.example.ny_times_articles.data.model
 
 import com.google.gson.annotations.SerializedName
 

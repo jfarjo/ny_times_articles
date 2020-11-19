@@ -1,4 +1,4 @@
-package com.example.ny_times_articles.model
+package com.example.ny_times_articles.data.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

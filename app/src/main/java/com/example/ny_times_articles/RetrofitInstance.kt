@@ -1,4 +1,4 @@
-package com.example.ny_times_articles.networking
+package com.example.ny_times_articles
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
