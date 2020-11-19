@@ -24,7 +24,7 @@ From Android Studio:
 
 ## Maintainers
 This project is mantained by:
-* [Johnny Farjo](http://github.com/johnnyfarjo)
+* [Johnny Farjo](https://github.com/jfarjo)
 
 
 ## Contributing
