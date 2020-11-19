@@ -26,5 +26,4 @@ class MyApp : Application(), KodeinAware {
         bind() from singleton { ArticlesRepository(instance(), instance()) }
         bind() from provider { ArticlesViewModelFactory(instance()) }
     }
-
 }
