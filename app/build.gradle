@@ -38,6 +38,27 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    productFlavors {
+        dev {
+            dimension "mode"
+            buildConfigField("boolean", "IS_DEBUG", "true")
+        }
+        store {
+            dimension "mode"
+        }
+        prod {
+            dimension "api"
+            if (gradle.startParameter.taskNames.size() > 0 && (gradle.startParameter.taskNames.get(0).contains("Debug") || gradle.startParameter.taskNames.get(0).contains("ProdDev"))) {
+                versionNameSuffix "-prod-debug"
+                buildConfigField("boolean", "IS_DEBUG",  "true")
+                buildConfigField("boolean", "IS_PUBLIC", "false")
+            } else {
+                buildConfigField("boolean", "IS_DEBUG",  "false")
+                buildConfigField("boolean", "IS_PUBLIC", "false")
+            }
+        }
+    }
 }
 
 dependencies {
