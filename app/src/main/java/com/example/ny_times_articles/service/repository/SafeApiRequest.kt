@@ -1,6 +1,6 @@
-package com.example.ny_times_articles.data.repositories
+package com.example.ny_times_articles.service.repository
 
-import com.example.ny_times_articles.utils.ApiException
+import com.example.ny_times_articles.utilities.ApiException
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Response

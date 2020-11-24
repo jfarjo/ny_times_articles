@@ -18,7 +18,7 @@
         android:usesCleartextTraffic="true">
 
         <!--region "Activities"-->
-        <activity android:name="com.example.ny_times_articles.ui.MainActivity">
+        <activity android:name="com.example.ny_times_articles.view.ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

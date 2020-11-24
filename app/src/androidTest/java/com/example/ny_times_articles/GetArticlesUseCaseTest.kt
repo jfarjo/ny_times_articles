@@ -1,16 +1,16 @@
 package com.example.ny_times_articles
 
 import androidx.fragment.app.testing.launchFragment
+import androidx.fragment.app.testing.launchFragmentInContainer
+import androidx.lifecycle.Lifecycle
+import androidx.navigation.Navigation
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.ny_times_articles.ui.articles.MainFragment
-import com.example.ny_times_articles.utils.Constants
+import com.example.ny_times_articles.view.ui.ArticleDetailsFragment
+import com.example.ny_times_articles.view.ui.MainFragment
 import com.squareup.okhttp.mockwebserver.MockResponse
 import com.squareup.okhttp.mockwebserver.MockWebServer
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNotNull
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
@@ -62,16 +62,12 @@ open class GetArticlesUseCaseTest : KoinTest {
 
     @Test
     fun test_articles_repo_retrieves_expected_data(): Unit = runBlocking {
-        val scenario = launchFragment<MainFragment>()
+        val scenario = launchFragmentInContainer<MainFragment>()
+        scenario.moveToState(Lifecycle.State.CREATED)
         scenario.onFragment { fragment ->
             mockNetworkResponseWithFileContent("text.json", HttpURLConnection.HTTP_OK)
-            GlobalScope.launch(Dispatchers.IO) {
-                val dataReceived = fragment.viewModel.getArticles(Constants.NY_API_KEY)
-                GlobalScope.launch(Dispatchers.IO) {
-                    assertNotNull(dataReceived.articles)
-                    assertEquals(dataReceived.articles[0].source, "New York Times")
-                }
-            }
+            assertNotNull(fragment.articles)
+            assertEquals(fragment.articles[0].source, "New York Times")
         }
     }
 

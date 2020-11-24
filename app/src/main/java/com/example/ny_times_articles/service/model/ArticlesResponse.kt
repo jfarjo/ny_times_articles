@@ -1,5 +1,6 @@
-package com.example.ny_times_articles.data.model
+package com.example.ny_times_articles.service.model
 
+import com.example.ny_times_articles.service.model.Article
 import com.google.gson.annotations.SerializedName
 
 class ArticlesResponse {

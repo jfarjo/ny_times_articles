@@ -1,23 +1,23 @@
-package com.example.ny_times_articles.db
+package com.example.ny_times_articles.data.local
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.ny_times_articles.data.model.Article
+import com.example.ny_times_articles.service.model.Article
 
 @Database(
     entities = [Article::class],
     version = 1
 )
-abstract class AppDatabase : RoomDatabase() {
+abstract class LocalDataSource : RoomDatabase() {
 
     abstract fun getArticleDao(): ArticleDao
 
     companion object {
 
         @Volatile
-        private var instance: AppDatabase? = null
+        private var instance: LocalDataSource? = null
         private val LOCK = Any()
 
         operator fun invoke(context: Context) = instance ?: synchronized(LOCK) {
@@ -29,7 +29,7 @@ abstract class AppDatabase : RoomDatabase() {
         private fun buildDatabase(context: Context) =
             Room.databaseBuilder(
                 context.applicationContext,
-                AppDatabase::class.java,
+                LocalDataSource::class.java,
                 "MyDatabase.db"
             ).build()
     }

@@ -1,4 +1,4 @@
-package com.example.ny_times_articles.ui
+package com.example.ny_times_articles.view.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ny_times_articles.R

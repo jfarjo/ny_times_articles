@@ -1,4 +1,4 @@
-package com.example.ny_times_articles.utils
+package com.example.ny_times_articles.utilities
 
 object Constants {
 

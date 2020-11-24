@@ -1,4 +1,4 @@
-package com.example.ny_times_articles.utils
+package com.example.ny_times_articles.utilities
 
 import android.content.Context
 import android.net.ConnectivityManager
@@ -33,5 +33,4 @@ class NetworkConnectionInterceptor(
         }
         return result
     }
-
 }

@@ -1,4 +1,4 @@
-package com.example.ny_times_articles.ui.articles
+package com.example.ny_times_articles.view.ui
 
 import android.app.Activity
 import android.os.Bundle
@@ -13,20 +13,19 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.ny_times_articles.R
-import com.example.ny_times_articles.data.model.Article
-import com.example.ny_times_articles.utils.ApiException
-import com.example.ny_times_articles.utils.Constants
-import com.example.ny_times_articles.utils.DividerItemDecorator
-import com.example.ny_times_articles.utils.NoInternetException
+import com.example.ny_times_articles.view.adapter.ArticlesAdapter
+import com.example.ny_times_articles.service.model.Article
+import com.example.ny_times_articles.ui.articles.UiState
+import com.example.ny_times_articles.utilities.DividerItemDecorator
+import com.example.ny_times_articles.view.callback.OnItemClickListener
+import com.example.ny_times_articles.view.viewmodel.ArticlesViewModel
+import com.example.ny_times_articles.view.viewmodel.ArticlesViewModelFactory
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.header_layout.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
-
 
 class MainFragment : Fragment(R.layout.fragment_main), OnItemClickListener, KodeinAware {
 
@@ -48,18 +47,24 @@ class MainFragment : Fragment(R.layout.fragment_main), OnItemClickListener, Kode
 
         activity = getActivity() as FragmentActivity
 
-        navController = Navigation.findNavController(view)
+        navController = Navigation.findNavController(activity, R.id.nav_host_fragment)
 
         viewModel = ViewModelProviders.of(this, factory).get(ArticlesViewModel::class.java)
 
-        viewModel.getCachedArticles().observe(viewLifecycleOwner, { response ->
-            articles.clear()
-            articles.addAll(response)
-            articlesAdapter.notifyDataSetChanged()
+        viewModel.uiState().observe(viewLifecycleOwner, { uiState ->
+            if (uiState != null) {
+                render(uiState)
+            }
         })
 
         setupRecyclerView()
         getArticles()
+
+        // region "Listeners"
+        srl_articles.setOnRefreshListener {
+            getArticles(true)
+        }
+        // endregion
     }
 
     private fun setupRecyclerView() {
@@ -75,21 +80,28 @@ class MainFragment : Fragment(R.layout.fragment_main), OnItemClickListener, Kode
         rv_articles.adapter = articlesAdapter
     }
 
-    // region "API Calls"
-    private fun getArticles() {
-        lifecycleScope.launch {
-            try {
-                val authResponse = viewModel.getArticles(Constants.NY_API_KEY)
-                GlobalScope.launch(Dispatchers.IO) {
-                    viewModel.saveArticles(authResponse.articles)
-                }
-            } catch (e: ApiException) {
-                Toast.makeText(activity, e.toString(), Toast.LENGTH_SHORT).show()
-                e.printStackTrace()
-            } catch (e: NoInternetException) {
-                Toast.makeText(activity, e.toString(), Toast.LENGTH_SHORT).show()
-                e.printStackTrace()
+    private fun render(uiState: UiState) {
+        when (uiState) {
+            is UiState.Loading -> {
+                srl_articles.isRefreshing = true
             }
+            is UiState.Success -> {
+                srl_articles.isRefreshing = false
+                articles.clear()
+                articles.addAll(uiState.articles)
+                articlesAdapter.notifyDataSetChanged()
+            }
+            is UiState.Error -> {
+                srl_articles.isRefreshing = false
+                Toast.makeText(activity, getString(R.string.sth_wrong), Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    // region "API Calls"
+    private fun getArticles(isForceRefresh: Boolean = false) {
+        lifecycleScope.launch {
+            viewModel.getArticles(isForceRefresh)
         }
     }
     // endregion

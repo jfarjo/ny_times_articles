@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.ny_times_articles.ui.articles.MainFragment"
+        android:name="com.example.ny_times_articles.view.ui.MainFragment"
         android:label="MainFragment">
         <action
             android:id="@+id/action_mainFragment_to_articleDetailsFragment"
@@ -14,6 +14,6 @@
     </fragment>
     <fragment
         android:id="@+id/articleDetailsFragment"
-        android:name="com.example.ny_times_articles.ui.articles.ArticleDetailsFragment"
+        android:name="com.example.ny_times_articles.view.ui.ArticleDetailsFragment"
         android:label="ArticleDetailsFragment" />
 </navigation>

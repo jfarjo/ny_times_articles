@@ -1,4 +1,4 @@
-package com.example.ny_times_articles.ui.articles
+package com.example.ny_times_articles.view.ui
 
 import android.app.Activity
 import android.os.Bundle
@@ -6,7 +6,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.example.ny_times_articles.R
-import com.example.ny_times_articles.data.model.Article
+import com.example.ny_times_articles.service.model.Article
 import kotlinx.android.synthetic.main.fragment_article_details.*
 import kotlinx.android.synthetic.main.header_layout.*
 

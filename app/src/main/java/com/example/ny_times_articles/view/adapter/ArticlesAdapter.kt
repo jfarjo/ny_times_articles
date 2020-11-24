@@ -1,4 +1,4 @@
-package com.example.ny_times_articles.ui.articles
+package com.example.ny_times_articles.view.adapter
 
 import android.app.Activity
 import android.view.LayoutInflater
@@ -7,7 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ny_times_articles.R
-import com.example.ny_times_articles.data.model.Article
+import com.example.ny_times_articles.service.model.Article
+import com.example.ny_times_articles.view.callback.OnItemClickListener
 import kotlinx.android.synthetic.main.row_article.view.*
 
 class ArticlesAdapter(

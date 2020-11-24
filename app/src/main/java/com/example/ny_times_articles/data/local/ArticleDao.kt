@@ -1,11 +1,10 @@
-package com.example.ny_times_articles.db
+package com.example.ny_times_articles.data.local
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.ny_times_articles.data.model.Article
+import com.example.ny_times_articles.service.model.Article
 
 @Dao
 interface ArticleDao {
@@ -14,5 +13,5 @@ interface ArticleDao {
     fun insert(article: List<Article>)
 
     @Query("SELECT * FROM articles")
-    fun getArticles(): LiveData<List<Article>>
+    fun getArticles(): List<Article>
 }

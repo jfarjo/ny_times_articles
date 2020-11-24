@@ -9,8 +9,8 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import com.example.ny_times_articles.data.model.Article
-import com.example.ny_times_articles.ui.articles.ArticleDetailsFragment
+import com.example.ny_times_articles.service.model.Article
+import com.example.ny_times_articles.view.ui.ArticleDetailsFragment
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config

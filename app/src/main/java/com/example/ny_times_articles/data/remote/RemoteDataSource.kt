@@ -1,7 +1,7 @@
-package com.example.ny_times_articles.data.network
+package com.example.ny_times_articles.data.remote
 
-import com.example.ny_times_articles.utils.NetworkConnectionInterceptor
-import com.example.ny_times_articles.data.model.ArticlesResponse
+import com.example.ny_times_articles.service.model.ArticlesResponse
+import com.example.ny_times_articles.utilities.NetworkConnectionInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface MyApi {
+interface RemoteDataSource {
 
     @GET("mostpopular/v2/mostviewed/all-sections/7.json")
     suspend fun getArticles(@Query("api-key") apiKey: String): Response<ArticlesResponse>
@@ -20,7 +20,7 @@ interface MyApi {
 
         operator fun invoke(
             networkConnectionInterceptor: NetworkConnectionInterceptor
-        ): MyApi {
+        ): RemoteDataSource {
 
             val interceptor = HttpLoggingInterceptor()
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -36,7 +36,7 @@ interface MyApi {
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-                .create(MyApi::class.java)
+                .create(RemoteDataSource::class.java)
         }
     }
 }
